@@ -66,7 +66,15 @@ public class NestreLogo : MonoBehaviour, INeuroGuideFocusMeterExperienceInteract
     public void OnAboveFocusThreshold()
     //------------------------------------//
     {
-        logo.SetActive( true );
+        switch (NeuroGuideFocusMeterExperience.system.currentLevel)
+        {
+            case 5:
+                logo.SetActive(true);
+
+                Debug.Log("NestreLogo.cs // Showing Nestre Logo");
+
+                break;
+        }
 
     } //END OnAboveThreshold
 
@@ -81,7 +89,7 @@ public class NestreLogo : MonoBehaviour, INeuroGuideFocusMeterExperienceInteract
     public void OnBelowFocusThreshold()
     //-------------------------------------//
     {
-        logo.SetActive( false );
+        //logo.SetActive( false );
 
     } //END OnBelowThreshold
 

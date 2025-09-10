@@ -10,6 +10,7 @@ using gambit.mathhelper;
 
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Rendering.VirtualTexturing;
 
 #endregion
 
@@ -137,8 +138,15 @@ public class HyperCube : MonoBehaviour, INeuroGuideFocusMeterExperienceInteracta
     public void OnAboveFocusThreshold()
     //------------------------------------//
     {
-        hypercube.SetActive( true );
+        switch (NeuroGuideFocusMeterExperience.system.currentLevel)
+        {
+            case 5:
+                hypercube.SetActive(true);
 
+                Debug.Log("HyperCube.cs // Showing HyperCube");
+
+                break;
+        }
     } //END OnAboveThreshold
 
     #endregion
@@ -152,7 +160,7 @@ public class HyperCube : MonoBehaviour, INeuroGuideFocusMeterExperienceInteracta
     public void OnBelowFocusThreshold()
     //-------------------------------------//
     {
-        hypercube.SetActive( false );
+        //hypercube.SetActive( false );
 
     } //END OnBelowThreshold
 

@@ -611,9 +611,9 @@ MonoBehaviour:
   logs: 1
   debug: 1
   totalDurationInSeconds: 2.5
-  threshold: 0.75
-  preventThresholdPassedLength: 2
-  gainingFocusMuliplier: 1
+  threshold: 0.2
+  preventThresholdPassedLength: 2.2
+  gainingFocusMuliplier: 0.5
   losingFocusMuliplier: 1
   numOfLevelsGained: 1
   numOfLevelsLost: 1
@@ -775,7 +775,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 389127928}
-  threshold: 0.99
   stateName: pieces_spin
 --- !u!1 &404308840
 GameObject:

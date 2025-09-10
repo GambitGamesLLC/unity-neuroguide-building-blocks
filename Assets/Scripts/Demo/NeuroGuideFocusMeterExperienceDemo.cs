@@ -146,7 +146,7 @@ namespace gambit.neuroguide
 
                     numOfLevelsGained = numOfLevelsGained,
                     numOfLevelsLost = numOfLevelsLost,
-
+                    
                     OnAboveFocusThreshold = () =>
                     {
                         //Debug.Log( "Above Threshold" );
