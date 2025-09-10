@@ -16,7 +16,7 @@ using UnityEngine;
 /// <summary>
 /// Rotate the hypercube a few times
 /// </summary>
-public class HypercubeSpin : MonoBehaviour, INeuroGuideAnimationExperienceInteractable
+public class HypercubeSpin : MonoBehaviour, INeuroGuideFocusMeterExperienceInteractable
 {
     #region PUBLIC - VARIABLES
 
@@ -55,7 +55,7 @@ public class HypercubeSpin : MonoBehaviour, INeuroGuideAnimationExperienceIntera
     /// </summary>
     /// <param name="isRecievingReward">Is the user currently recieiving a reward?</param>
     //--------------------------------------------------------------------//
-    public void OnRecievingRewardChanged( bool isRecievingReward )
+    public void OnRecievingFocusRewardChanged( bool isRecievingReward )
     //--------------------------------------------------------------------//
     {
 
@@ -65,7 +65,7 @@ public class HypercubeSpin : MonoBehaviour, INeuroGuideAnimationExperienceIntera
 
     #region PUBLIC - NUEROGUIDE - ON DATA UPDATE
 
-    public void OnDataUpdate(float value)
+    public void OnFocusDataUpdate(float value)
     {
         PlayAnimationDirectly( stateName, 0, value);
     }
@@ -78,7 +78,7 @@ public class HypercubeSpin : MonoBehaviour, INeuroGuideAnimationExperienceIntera
     /// Called when the NeuroGuideAnimationExperience has a score thats above the threshold value
     /// </summary>
     //------------------------------------//
-    public void OnAboveThreshold()
+    public void OnAboveFocusThreshold()
     //------------------------------------//
     {
 
@@ -92,7 +92,7 @@ public class HypercubeSpin : MonoBehaviour, INeuroGuideAnimationExperienceIntera
     /// Called when the NeuroGuideAnimationExperience has a score thats below the threshold value
     /// </summary>
     //-------------------------------------//
-    public void OnBelowThreshold()
+    public void OnBelowFocusThreshold()
     //-------------------------------------//
     {
 

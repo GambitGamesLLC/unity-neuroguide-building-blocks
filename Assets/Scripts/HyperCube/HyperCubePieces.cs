@@ -22,7 +22,7 @@ using UnityEngine;
 
 #endregion
 
-public class HyperCubePieces: MonoBehaviour, INeuroGuideAnimationExperienceInteractable
+public class HyperCubePieces: MonoBehaviour, INeuroGuideFocusMeterExperienceInteractable
 {
 
     #region PUBLIC - VARIABLES
@@ -111,7 +111,7 @@ public class HyperCubePieces: MonoBehaviour, INeuroGuideAnimationExperienceInter
     /// </summary>
     /// <param name="isRecievingReward">Is the user currently recieiving a reward?</param>
     //--------------------------------------------------------------------//
-    public void OnRecievingRewardChanged( bool isRecievingReward )
+    public void OnRecievingFocusRewardChanged( bool isRecievingReward )
     //--------------------------------------------------------------------//
     {
         
@@ -126,7 +126,7 @@ public class HyperCubePieces: MonoBehaviour, INeuroGuideAnimationExperienceInter
     /// </summary>
     /// <param name="system">The NeuroGuide system object</param>
     //------------------------------------------------------------------------//
-    public void OnDataUpdate( float value )
+    public void OnFocusDataUpdate( float value )
     //------------------------------------------------------------------------//
     {
 
@@ -155,7 +155,7 @@ public class HyperCubePieces: MonoBehaviour, INeuroGuideAnimationExperienceInter
     /// Called when the NeuroGuideAnimationExperience has a score thats above the threshold value
     /// </summary>
     //------------------------------------//
-    public void OnAboveThreshold()
+    public void OnAboveFocusThreshold()
     //------------------------------------//
     {
         cube_pieces.SetActive( false );
@@ -170,7 +170,7 @@ public class HyperCubePieces: MonoBehaviour, INeuroGuideAnimationExperienceInter
     /// Called when the NeuroGuideAnimationExperience has a score thats below the threshold value
     /// </summary>
     //-------------------------------------//
-    public void OnBelowThreshold()
+    public void OnBelowFocusThreshold()
     //-------------------------------------//
     {
         cube_pieces.SetActive( true );

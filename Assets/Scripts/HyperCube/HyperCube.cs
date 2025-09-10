@@ -16,7 +16,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Keeps the Hypercube visual component up to date with the NeuroGuide hardware data
 /// </summary>
-public class HyperCube : MonoBehaviour, INeuroGuideAnimationExperienceInteractable
+public class HyperCube : MonoBehaviour, INeuroGuideFocusMeterExperienceInteractable
 {
 
     #region PUBLIC - VARIABLES
@@ -105,7 +105,7 @@ public class HyperCube : MonoBehaviour, INeuroGuideAnimationExperienceInteractab
     /// </summary>
     /// <param name="isRecievingReward">Is the user currently recieiving a reward?</param>
     //--------------------------------------------------------------------//
-    public void OnRecievingRewardChanged( bool isRecievingReward )
+    public void OnRecievingFocusRewardChanged( bool isRecievingReward )
     //--------------------------------------------------------------------//
     {
 
@@ -120,7 +120,7 @@ public class HyperCube : MonoBehaviour, INeuroGuideAnimationExperienceInteractab
     /// </summary>
     /// <param name="system">The NeuroGuide system object</param>
     //------------------------------------------------------------------------//
-    public void OnDataUpdate( float value )
+    public void OnFocusDataUpdate( float value )
     //------------------------------------------------------------------------//
     {
         
@@ -134,7 +134,7 @@ public class HyperCube : MonoBehaviour, INeuroGuideAnimationExperienceInteractab
     /// Called when the NeuroGuideAnimationExperience has a score thats above the threshold value
     /// </summary>
     //------------------------------------//
-    public void OnAboveThreshold()
+    public void OnAboveFocusThreshold()
     //------------------------------------//
     {
         hypercube.SetActive( true );
@@ -149,7 +149,7 @@ public class HyperCube : MonoBehaviour, INeuroGuideAnimationExperienceInteractab
     /// Called when the NeuroGuideAnimationExperience has a score thats below the threshold value
     /// </summary>
     //-------------------------------------//
-    public void OnBelowThreshold()
+    public void OnBelowFocusThreshold()
     //-------------------------------------//
     {
         hypercube.SetActive( false );

@@ -3,7 +3,6 @@
 using UnityEngine;
 using gambit.mathhelper;
 
-
 #if GAMBIT_NEUROGUIDE
 using gambit.neuroguide;
 #endif
