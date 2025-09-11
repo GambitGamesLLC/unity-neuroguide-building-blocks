@@ -66,6 +66,7 @@ public class NestreLogo : MonoBehaviour, INeuroGuideFocusMeterExperienceInteract
     public void OnAboveFocusThreshold()
     //------------------------------------//
     {
+        /*
         switch (NeuroGuideFocusMeterExperience.system.currentLevel)
         {
             case 5:
@@ -75,7 +76,7 @@ public class NestreLogo : MonoBehaviour, INeuroGuideFocusMeterExperienceInteract
 
                 break;
         }
-
+        */
     } //END OnAboveThreshold
 
     #endregion

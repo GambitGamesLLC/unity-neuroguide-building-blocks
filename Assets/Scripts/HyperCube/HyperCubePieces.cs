@@ -160,20 +160,9 @@ public class HyperCubePieces: MonoBehaviour, INeuroGuideFocusMeterExperienceInte
     {
         //Debug.Log("NeuroGuideInteractableDemo.cs // OnAboveFocusThreshold() // ");
 
-
         switch (NeuroGuideFocusMeterExperience.system.currentLevel)
         {
             case 5:
-                //objectRenderer.material.color = level5Color;
-
-                //NeuroGuideFocusMeterExperience.system.currentLevel++;
-
-                //NeuroGuideFocusMeterExperience.system.options.numOfLevelsGained = 1f;
-                //NeuroGuideFocusMeterExperience.system.options.numOfLevelsLost = 1f;
-
-                //NeuroGuideFocusMeterExperience.system.options.gainingFocusMultiplier = 1f;
-                //NeuroGuideFocusMeterExperience.system.options.losingFocusMultiplier = 1f;
-
                 cube_pieces.SetActive(false);
 
                 break;

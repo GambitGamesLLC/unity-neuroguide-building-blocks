@@ -28,6 +28,10 @@ public class HypercubeSpin : MonoBehaviour, INeuroGuideFocusMeterExperienceInter
 
     public string stateName;
 
+    private HyperCube hyperCube;
+
+    private NestreLogo nestreLogo;
+
     #endregion
 
     #region PRIVATE - VARIABLES
@@ -36,17 +40,22 @@ public class HypercubeSpin : MonoBehaviour, INeuroGuideFocusMeterExperienceInter
 
     #endregion
 
-    #region PUBLIC - START
+    #region PRIVATE - START
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    //---------------------//
+    private void Start()
+    //--------------------//
     {
         // Convert the state name to a hash for performance
         stateHash = Animator.StringToHash( stateName );
 
         PlayAnimationDirectly( stateName );
         animator.speed = 0f;
-    }
+
+        hyperCube = FindAnyObjectByType<HyperCube>();
+        nestreLogo = FindAnyObjectByType<NestreLogo>();
+
+    } // END Start
 
     #endregion
 
@@ -65,12 +74,15 @@ public class HypercubeSpin : MonoBehaviour, INeuroGuideFocusMeterExperienceInter
 
     #endregion
 
-    #region PUBLIC - NUEROGUIDE - ON DATA UPDATE
+    #region PUBLIC - NUEROGUIDE - ON FOCUS DATA UPDATE
 
+    //-------------------------------------------------//
     public void OnFocusDataUpdate(float value)
+    //-------------------------------------------------//
     {
         PlayAnimationDirectly( stateName, 0, value);
-    }
+
+    } // END OnFocusDataUpdate
 
     #endregion
 
@@ -85,93 +97,64 @@ public class HypercubeSpin : MonoBehaviour, INeuroGuideFocusMeterExperienceInter
     {
         //Debug.Log("NeuroGuideInteractableDemo.cs // OnAboveFocusThreshold() // ");
 
+        int _levelsToGain = (int)NeuroGuideFocusMeterExperience.system.options.numOfLevelsGained;
+
+        NeuroGuideFocusMeterExperience.system.currentLevel += _levelsToGain;
+
         if (NeuroGuideFocusMeterExperience.system.currentLevel > 5)
         {
             NeuroGuideFocusMeterExperience.system.currentLevel = 5;
         }
-
-        //NeuroGuideFocusMeterExperience.system.currentLevel++;
         
         switch (NeuroGuideFocusMeterExperience.system.currentLevel)
         {
             case 0:
-                /*
-                NeuroGuideFocusMeterExperience.system.options.numOfLevelsGained = 1f;
-                NeuroGuideFocusMeterExperience.system.options.numOfLevelsLost = 1f;
 
-                NeuroGuideFocusMeterExperience.system.options.gainingFocusMultiplier = 1f;
-                NeuroGuideFocusMeterExperience.system.options.losingFocusMultiplier = 1f;
-                */
                 NeuroGuideFocusMeterExperience.system.options.threshold = .2f;
 
-                Debug.Log("HypercubeSpin.cs // OnAboveFocusThreshold Level 0");
-
+                //Debug.Log("HypercubeSpin.cs // OnAboveFocusThreshold Level 0");
 
                 break;
 
             case 1:
-                /*
-                NeuroGuideFocusMeterExperience.system.options.numOfLevelsGained = 1f;
-                NeuroGuideFocusMeterExperience.system.options.numOfLevelsLost = 1f;
 
-                NeuroGuideFocusMeterExperience.system.options.gainingFocusMultiplier = 1f;
-                NeuroGuideFocusMeterExperience.system.options.losingFocusMultiplier = 1f;
-                */
                 NeuroGuideFocusMeterExperience.system.options.threshold = .4f;
 
-                Debug.Log("HypercubeSpin.cs // OnAboveFocusThreshold Level 1");
+                //Debug.Log("HypercubeSpin.cs // OnAboveFocusThreshold Level 1");
 
                 break;
 
             case 2:
-                /*
-                NeuroGuideFocusMeterExperience.system.options.numOfLevelsGained = 1f;
-                NeuroGuideFocusMeterExperience.system.options.numOfLevelsLost = 1f;
 
-                NeuroGuideFocusMeterExperience.system.options.gainingFocusMultiplier = 1f;
-                NeuroGuideFocusMeterExperience.system.options.losingFocusMultiplier = 1f;
-                */
                 NeuroGuideFocusMeterExperience.system.options.threshold = .6f;
-                Debug.Log("HypercubeSpin.cs // OnAboveFocusThreshold Level 2");
+
+                //Debug.Log("HypercubeSpin.cs // OnAboveFocusThreshold Level 2");
 
                 break;
 
             case 3:
-                /*
-                NeuroGuideFocusMeterExperience.system.options.numOfLevelsGained = 1f;
-                NeuroGuideFocusMeterExperience.system.options.numOfLevelsLost = 1f;
 
-                NeuroGuideFocusMeterExperience.system.options.gainingFocusMultiplier = 1f;
-                NeuroGuideFocusMeterExperience.system.options.losingFocusMultiplier = 1f;
-                */
                 NeuroGuideFocusMeterExperience.system.options.threshold = .8f;
-                Debug.Log("HypercubeSpin.cs // OnAboveFocusThreshold Level 3");
+
+                //Debug.Log("HypercubeSpin.cs // OnAboveFocusThreshold Level 3");
 
                 break;
 
             case 4:
-                /*
-                NeuroGuideFocusMeterExperience.system.options.numOfLevelsGained = 1f;
-                NeuroGuideFocusMeterExperience.system.options.numOfLevelsLost = 1f;
 
-                NeuroGuideFocusMeterExperience.system.options.gainingFocusMultiplier = 1f;
-                NeuroGuideFocusMeterExperience.system.options.losingFocusMultiplier = 1f;
-                */
                 NeuroGuideFocusMeterExperience.system.options.threshold = .99f;
                 
-                Debug.Log("HypercubeSpin.cs // OnAboveFocusThreshold Level 4");
+                //Debug.Log("HypercubeSpin.cs // OnAboveFocusThreshold Level 4");
 
                 break;
 
             case 5:
-                /*
-                NeuroGuideFocusMeterExperience.system.options.numOfLevelsGained = 1f;
-                NeuroGuideFocusMeterExperience.system.options.numOfLevelsLost = 1f;
+                nestreLogo.logo.gameObject.SetActive(true);
+                hyperCube.hypercube.SetActive(true);
 
-                NeuroGuideFocusMeterExperience.system.options.gainingFocusMultiplier = 1f;
-                NeuroGuideFocusMeterExperience.system.options.losingFocusMultiplier = 1f;
-                */
-                Debug.Log("HypercubeSpin.cs // OnAboveFocusThreshold Level 5");
+                NeuroGuideFocusMeterExperience.system.options.threshold = 1.1f;
+
+                //Debug.Log("HypercubeSpin.cs // OnAboveFocusThreshold Level 5");
 
                 break;
         }
@@ -191,8 +174,6 @@ public class HypercubeSpin : MonoBehaviour, INeuroGuideFocusMeterExperienceInter
     {
         //Debug.Log("NeuroGuideInteractableDemo // OnBelowFocusThreshold() //");
 
-        //NeuroGuideFocusMeterExperience.system.currentLevel--;
-
         if (NeuroGuideFocusMeterExperience.system.currentLevel < 0)
         {
             NeuroGuideFocusMeterExperience.system.currentLevel = 0;
@@ -201,32 +182,32 @@ public class HypercubeSpin : MonoBehaviour, INeuroGuideFocusMeterExperienceInter
         switch (NeuroGuideFocusMeterExperience.system.currentLevel)
         {
             case 0:
-                Debug.Log("HypercubeSpin.cs // OnBelowFocusThreshold Level 0");
+                //Debug.Log("HypercubeSpin.cs // OnBelowFocusThreshold Level 0");
                 StartCoroutine("PauseDataStream");
                 break;
 
             case 1:
-                Debug.Log("HypercubeSpin.cs // OnBelowFocusThreshold Level 1");
+                //Debug.Log("HypercubeSpin.cs // OnBelowFocusThreshold Level 1");
                 StartCoroutine("PauseDataStream");
                 break;
 
             case 2:
-                Debug.Log("HypercubeSpin.cs // OnBelowFocusThreshold Level 2");
+                //Debug.Log("HypercubeSpin.cs // OnBelowFocusThreshold Level 2");
                 StartCoroutine("PauseDataStream");
                 break;
 
             case 3:
-                Debug.Log("HypercubeSpin.cs // OnBelowFocusThreshold Level 3");
+                //Debug.Log("HypercubeSpin.cs // OnBelowFocusThreshold Level 3");
                 StartCoroutine("PauseDataStream");
                 break;
 
             case 4:
-                Debug.Log("HypercubeSpin.cs // OnAboveFocusThreshold Level 4");
+                //Debug.Log("HypercubeSpin.cs // OnAboveFocusThreshold Level 4");
                 
                 break;
 
             case 5:
-                Debug.Log("HypercubeSpin.cs // OnBelowFocusThreshold Level 5");
+                //Debug.Log("HypercubeSpin.cs // OnBelowFocusThreshold Level 5");
                 
                 break;
         }
@@ -255,12 +236,10 @@ public class HypercubeSpin : MonoBehaviour, INeuroGuideFocusMeterExperienceInter
     private IEnumerator PauseDataStream()
     //----------------------------------//
     {
-        //NeuroGuideManager.system.state = NeuroGuideManager.State.NoData;
         NeuroGuideManager.Instance.enabled = false;
 
         yield return new WaitForSeconds(.3f);
 
-        //NeuroGuideManager.system.state = NeuroGuideManager.State.ReceivingData;
         NeuroGuideManager.Instance.enabled = true;
 
     } // END PauseDataStream

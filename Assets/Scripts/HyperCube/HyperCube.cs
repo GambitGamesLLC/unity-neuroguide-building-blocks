@@ -10,7 +10,6 @@ using gambit.mathhelper;
 
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.Rendering.VirtualTexturing;
 
 #endregion
 
@@ -43,59 +42,9 @@ public class HyperCube : MonoBehaviour, INeuroGuideFocusMeterExperienceInteracta
     //---------------------------------//
     {
 
-        SetAnimationSpeedBasedOnAnimationLength();
-
         hypercube.SetActive( false );
 
     } //END Start
-
-    #endregion
-
-    #region PUBLIC - ON ENABLE
-
-    /// <summary>
-    /// Unity lifecycle methods
-    /// </summary>
-    //--------------------------------//
-    private void OnEnable()
-    //--------------------------------//
-    {
-        SetAnimationSpeedBasedOnAnimationLength();
-
-    } //END OnEnable Method
-
-    #endregion
-    
-    #region PRIVATE - SET ANIMATION SPEED BASED ON ANIMATION LENGTH
-
-    /// <summary>
-    /// Changes the animator speed, referencing the total length of the NeuroGuideAnimationExperience
-    /// </summary>
-    //-----------------------------------------------------------//
-    private void SetAnimationSpeedBasedOnAnimationLength()
-    //-----------------------------------------------------------//
-    {
-        if(NeuroGuideAnimationExperience.system == null)
-        {
-            return;
-        }
-
-        if(NeuroGuideAnimationExperience.system.options == null)
-        {
-            return;
-        }
-
-        //Based on the length of the experience, choose a animation speed for the hypercube to spin at
-
-        float length = NeuroGuideAnimationExperience.system.options.totalDurationInSeconds;
-
-        float animationSpeed = MathHelper.GetCorrelatedValueFromClosest( animationSearchList, animationReturnList, length );
-
-        animator.SetFloat( AnimationSpeedMultiplierVariableName, animationSpeed );
-
-        //Debug.Log( "length = " + length + ", animationSpeed = " + animator.GetFloat( "AnimationSpeed" ) );
-
-    } //END SetAnimationSpeedBasedOnAnimationLength Method
 
     #endregion
 
@@ -138,6 +87,7 @@ public class HyperCube : MonoBehaviour, INeuroGuideFocusMeterExperienceInteracta
     public void OnAboveFocusThreshold()
     //------------------------------------//
     {
+        /*
         switch (NeuroGuideFocusMeterExperience.system.currentLevel)
         {
             case 5:
@@ -147,6 +97,7 @@ public class HyperCube : MonoBehaviour, INeuroGuideFocusMeterExperienceInteracta
 
                 break;
         }
+        */
     } //END OnAboveThreshold
 
     #endregion

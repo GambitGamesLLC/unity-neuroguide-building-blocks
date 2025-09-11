@@ -56,12 +56,24 @@ namespace gambit.neuroguide
         /// </summary>
         public float preventThresholdPassedLength = 2f;
 
+        /// <summary>
+        /// How fast we gain focus
+        /// </summary>
         public float gainingFocusMuliplier;
 
+        /// <summary>
+        /// How fast we lose focus
+        /// </summary>
         public float losingFocusMuliplier;
 
+        /// <summary>
+        /// How many levels we go up when we level up
+        /// </summary>
         public float numOfLevelsGained;
 
+        /// <summary>
+        /// How many levels we go down when we level down
+        /// </summary>
         public float numOfLevelsLost;
 
         #endregion

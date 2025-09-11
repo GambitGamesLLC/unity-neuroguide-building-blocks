@@ -613,7 +613,7 @@ MonoBehaviour:
   totalDurationInSeconds: 2.5
   threshold: 0.2
   preventThresholdPassedLength: 2.2
-  gainingFocusMuliplier: 0.5
+  gainingFocusMuliplier: 1
   losingFocusMuliplier: 1
   numOfLevelsGained: 1
   numOfLevelsLost: 1

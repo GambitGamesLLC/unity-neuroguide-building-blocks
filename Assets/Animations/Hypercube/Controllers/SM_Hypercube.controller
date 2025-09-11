@@ -11,7 +11,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 6509315737115668094}
-    m_Position: {x: 380, y: 110, z: 0}
+    m_Position: {x: 370, y: 120, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -58,7 +58,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: HypercubeAnim
-  m_Speed: 1
+  m_Speed: 0.15
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -72,7 +72,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: afd3cdeea53018e4d82a9654cd25be20, type: 2}
   m_Tag: 
-  m_SpeedParameter: AnimationSpeed
+  m_SpeedParameter: 1
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
