@@ -613,10 +613,6 @@ MonoBehaviour:
   totalDurationInSeconds: 2.5
   threshold: 0.2
   preventThresholdPassedLength: 2.2
-  gainingFocusMuliplier: 1
-  losingFocusMuliplier: 1
-  numOfLevelsGained: 1
-  numOfLevelsLost: 1
   stages:
   - gainingFocusMultiplier: 1
     losingFocusMultiplier: 1
@@ -628,7 +624,7 @@ MonoBehaviour:
     threshold: 0.4
     onFailureStageToJumpTo: 1
     onSuccessStageToJumpTo: 2
-  - gainingFocusMultiplier: 0.1
+  - gainingFocusMultiplier: 1
     losingFocusMultiplier: 1
     threshold: 0.6
     onFailureStageToJumpTo: 1

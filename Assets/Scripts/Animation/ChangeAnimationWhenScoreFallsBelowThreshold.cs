@@ -247,7 +247,7 @@ public class ChangeAnimationWhenScoreFallsBelowThreshold : MonoBehaviour, INeuro
 
                         if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
                         {
-                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level " + NeuroGuideFocusMeterExperience.system.options.stages[0].onFailureStageToJumpTo);
+                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level 0");
                         }
 
                         break;
@@ -259,7 +259,7 @@ public class ChangeAnimationWhenScoreFallsBelowThreshold : MonoBehaviour, INeuro
 
                         if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
                         {
-                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level 1 going back to Level " + NeuroGuideFocusMeterExperience.system.options.stages[1].onFailureStageToJumpTo);
+                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level 1 going back to Level 0");
                         }
 
                         break;
@@ -271,7 +271,7 @@ public class ChangeAnimationWhenScoreFallsBelowThreshold : MonoBehaviour, INeuro
 
                         if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
                         {
-                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level 2 going back to Level " + NeuroGuideFocusMeterExperience.system.options.stages[2].onFailureStageToJumpTo);
+                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level 2 going back to Level 1");
                         }
 
                         break;
@@ -283,7 +283,7 @@ public class ChangeAnimationWhenScoreFallsBelowThreshold : MonoBehaviour, INeuro
 
                         if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
                         {
-                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level 3 going back to Level " + NeuroGuideFocusMeterExperience.system.options.stages[3].onFailureStageToJumpTo);
+                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level 3 going back to Level 2");
                         }
 
                         break;
@@ -295,7 +295,7 @@ public class ChangeAnimationWhenScoreFallsBelowThreshold : MonoBehaviour, INeuro
 
                         if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
                         {
-                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level 4 going back to level " + NeuroGuideFocusMeterExperience.system.options.stages[4].onFailureStageToJumpTo);
+                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level 4 going back to level 3");
                         }
 
                         break;
@@ -314,10 +314,7 @@ public class ChangeAnimationWhenScoreFallsBelowThreshold : MonoBehaviour, INeuro
 
                         if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
                         {
-                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level 5 going back to level " + NeuroGuideFocusMeterExperience.system.options.stages[5].onFailureStageToJumpTo);
-                            Debug.Log("Current Level = " + NeuroGuideFocusMeterExperience.system.currentLevel);
-
-
+                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level 5 going back to level 3");
                         }
 
                         break;
