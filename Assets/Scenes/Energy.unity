@@ -622,7 +622,7 @@ MonoBehaviour:
   - gainingFocusMultiplier: 1
     losingFocusMultiplier: 1
     threshold: 0.4
-    onFailureStageToJumpTo: 1
+    onFailureStageToJumpTo: 0
     onSuccessStageToJumpTo: 2
   - gainingFocusMultiplier: 1
     losingFocusMultiplier: 1
