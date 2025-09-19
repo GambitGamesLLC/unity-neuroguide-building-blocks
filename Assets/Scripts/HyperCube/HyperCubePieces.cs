@@ -71,7 +71,7 @@ public class HyperCubePieces: MonoBehaviour, INeuroGuideFocusMeterExperienceInte
     /// How far into the NeuroGuideExperience should we be before we cross the threshold? Uses a 0-1 normalized percentage value
     /// </summary>
     private float threshold = 0.85f;
-
+    
     #endregion
 
     #region PUBLIC START
@@ -129,13 +129,12 @@ public class HyperCubePieces: MonoBehaviour, INeuroGuideFocusMeterExperienceInte
     public void OnFocusDataUpdate( float value )
     //------------------------------------------------------------------------//
     {
-
         //Debug.Log( system.currentNormalizedAverageValue );
-        PlayAnimationDirectly( "Joining", 0, value );
+        PlayAnimationDirectly("Joining", 0, value);
 
         //Animate our cube grunge texture
 #if GAMBIT_MATHHELPER
-        if(grunge_material != null ) 
+        if (grunge_material != null ) 
             grunge_material.SetFloat( "_AlphaClipping", MathHelper.Map( value, 0f, threshold, grungeMin, grungeMax ) );
 #endif
 
@@ -158,16 +157,7 @@ public class HyperCubePieces: MonoBehaviour, INeuroGuideFocusMeterExperienceInte
     public void OnAboveFocusThreshold()
     //------------------------------------//
     {
-        //Debug.Log("NeuroGuideInteractableDemo.cs // OnAboveFocusThreshold() // ");
-
-        switch (NeuroGuideFocusMeterExperience.system.currentLevel)
-        {
-            case 5:
-                cube_pieces.SetActive(false);
-
-                break;
-        }
-
+        
     } //END OnAboveThreshold
 
     #endregion
@@ -181,7 +171,6 @@ public class HyperCubePieces: MonoBehaviour, INeuroGuideFocusMeterExperienceInte
     public void OnBelowFocusThreshold()
     //-------------------------------------//
     {
-        cube_pieces.SetActive( true );
 
     } //END OnBelowThreshold
 

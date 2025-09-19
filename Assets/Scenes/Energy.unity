@@ -617,6 +617,37 @@ MonoBehaviour:
   losingFocusMuliplier: 1
   numOfLevelsGained: 1
   numOfLevelsLost: 1
+  stages:
+  - gainingFocusMultiplier: 1
+    losingFocusMultiplier: 1
+    threshold: 0.2
+    onFailureStageToJumpTo: 0
+    onSuccessStageToJumpTo: 1
+  - gainingFocusMultiplier: 1
+    losingFocusMultiplier: 1
+    threshold: 0.4
+    onFailureStageToJumpTo: 1
+    onSuccessStageToJumpTo: 2
+  - gainingFocusMultiplier: 0.1
+    losingFocusMultiplier: 1
+    threshold: 0.6
+    onFailureStageToJumpTo: 1
+    onSuccessStageToJumpTo: 3
+  - gainingFocusMultiplier: 1
+    losingFocusMultiplier: 1
+    threshold: 0.8
+    onFailureStageToJumpTo: 2
+    onSuccessStageToJumpTo: 4
+  - gainingFocusMultiplier: 1
+    losingFocusMultiplier: 1
+    threshold: 0.99
+    onFailureStageToJumpTo: 3
+    onSuccessStageToJumpTo: 5
+  - gainingFocusMultiplier: 1
+    losingFocusMultiplier: 1
+    threshold: 1
+    onFailureStageToJumpTo: 2
+    onSuccessStageToJumpTo: 0
 --- !u!1001 &227790112
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6998,7 +7029,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25e2c6a91533dc8448b1dcf50a04ed7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  changeToProgress: 0.33
+  nestreLogo: {fileID: 1222559982}
+  hyperCube: {fileID: 1981093133}
+  hyperCubePieces: {fileID: 603471136}
+  animator: {fileID: 389127928}
 --- !u!1 &1612925294
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,6 +18,7 @@ namespace gambit.neuroguide
 #endif
 
     using UnityEngine;
+    using System.Collections.Generic;
 
     #endregion
 
@@ -35,7 +36,7 @@ namespace gambit.neuroguide
         /// Should we enable the NeuroGuideManager debug logs?
         /// </summary>
         public bool logs = true;
-
+        
         /// <summary>
         /// Should we enable the debug system for the NeuroGear hardware? This will enable keyboard events to control simulated NeuroGear hardware data spawned during the Create() method of NeuroGuideManager.cs
         /// </summary>
@@ -57,24 +58,9 @@ namespace gambit.neuroguide
         public float preventThresholdPassedLength = 2f;
 
         /// <summary>
-        /// How fast we gain focus
+        /// Each stages with its own specific configurations for how it works
         /// </summary>
-        public float gainingFocusMuliplier;
-
-        /// <summary>
-        /// How fast we lose focus
-        /// </summary>
-        public float losingFocusMuliplier;
-
-        /// <summary>
-        /// How many levels we go up when we level up
-        /// </summary>
-        public float numOfLevelsGained;
-
-        /// <summary>
-        /// How many levels we go down when we level down
-        /// </summary>
-        public float numOfLevelsLost;
+        public List<NeuroGuideFocusMeterExperience.Options.Stages> stages = new List<NeuroGuideFocusMeterExperience.Options.Stages>();
 
         #endregion
 
@@ -103,7 +89,7 @@ namespace gambit.neuroguide
         private void CreateNeuroGuideManager()
         //---------------------------------------------//
         {
-
+            
             NeuroGuideManager.Create
             (
                 //Create and pass in Options object
@@ -153,12 +139,8 @@ namespace gambit.neuroguide
                     threshold = threshold,
                     preventThresholdPassedLength = preventThresholdPassedLength,
                     
-                    gainingFocusMultiplier = gainingFocusMuliplier,
-                    losingFocusMultiplier = losingFocusMuliplier,
+                    stages = stages,
 
-                    numOfLevelsGained = numOfLevelsGained,
-                    numOfLevelsLost = numOfLevelsLost,
-                    
                     OnAboveFocusThreshold = () =>
                     {
                         //Debug.Log( "Above Threshold" );

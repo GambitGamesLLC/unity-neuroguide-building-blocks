@@ -9,66 +9,197 @@ using gambit.neuroguide;
 
 #endregion
 
-
-
-public class ChangeAnimationWhenScoreFallsBelowThreshold: MonoBehaviour, INeuroGuideAnimationExperienceInteractable
+public class ChangeAnimationWhenScoreFallsBelowThreshold : MonoBehaviour, INeuroGuideFocusMeterExperienceInteractable
 {
     #region PUBLIC - VARIABLES
 
-    /// <summary>
-    /// The time in the animation to switch to, normalized 0-1
-    /// </summary>
-    public float changeToProgress = 0.33f;
+    [SerializeField] private NestreLogo nestreLogo;
+    [SerializeField] private HyperCube hyperCube;
+    [SerializeField] private HyperCubePieces hyperCubePieces;
+    [SerializeField] private Animator animator;
 
     #endregion
 
-    #region PUBLIC - START
+    #region PRIVATE - UPDATE
 
-    /// <summary>
-    /// Unity lifecycle function
-    /// </summary>
     //------------------------------//
-    public void Start()
+    private void Update()
     //------------------------------//
     {
-        PreventChangeToProgressValueBeingAboveThreshold();
+        CheckIfWeShouldPlayAnimationBackwards();
 
-    } //END Start Method
+    } // END Update
 
     #endregion
 
-    #region PRIVATE - PREVENT CHANGE TO PROGRESS VALUE BEING ABOVE THRESHOLD
+    #region PRIVATE - CHECK IF WE SHOULD PLAY ANIMATION BACKWARDS
 
-    /// <summary>
-    /// Prevents the change to progress value from accidentally being set to a value higher then the threshold.
-    /// If this was allowed to occur, you could enter a state that impossible to leave
-    /// </summary>
-    //-------------------------------------------------------------------//
-    private void PreventChangeToProgressValueBeingAboveThreshold()
-    //-------------------------------------------------------------------//
+    //------------------------------------------------------//
+    private void CheckIfWeShouldPlayAnimationBackwards()
+    //------------------------------------------------------//
     {
-
-        if(NeuroGuideAnimationExperience.system == null)
+        if (NeuroGuideFocusMeterExperience.system.isPlayingBackwards == true)
         {
-            return;
-        }
+            AnimatorStateInfo _info = animator.GetCurrentAnimatorStateInfo(0);
 
-        if(changeToProgress > NeuroGuideAnimationExperience.system.options.threshold)
-        {
-            changeToProgress = NeuroGuideAnimationExperience.system.options.threshold;
-            Debug.LogWarning( "ChangeAnimationWhenScoreFallsBelowThreshold.cs PreventChangeToProgressValueBeingAboveThreshold() The changeToProgress value cannot be above the threshold. Forcibly setting the changeToProgress value to the same value as the threshold." );
-        }
+            // Level 2
+            if (_info.normalizedTime >= .41f || _info.normalizedTime <= .4f && NeuroGuideFocusMeterExperience.system.currentLevel == 2)
+            {
+                NeuroGuideFocusMeterExperience.system.isPlayingBackwards = true;
 
-    } //END PreventChangeToProgressValueBeingAboveThreshold Method
+                //Debug.Log("ChangeAnimationWhenScoreFallsBelowThreshold // CheckIfWeShouldPlayAnimationBackwards() // Playing backwards we are at level 2");
+            }
+            else
+            {
+                NeuroGuideFocusMeterExperience.system.isPlayingBackwards = false;
+                NeuroGuideFocusMeterExperience.system.preventThresholdLength = 0;
+
+                //Debug.Log("ChangeAnimationWhenScoreFallsBelowThreshold // CheckIfWeShouldPlayAnimationBackwards() // Stopped playing backwards");
+            }
+        }
+    } // END CheckIfWeShouldPlayAnimationBackwards
 
     #endregion
 
     #region PUBLIC - NEUROGUIDE - ON ABOVE THRESHOLD
 
-    public void OnAboveThreshold()
+    //-----------------------------------------//
+    public void OnAboveFocusThreshold()
+    //-----------------------------------------//
     {
+        
+        if (NeuroGuideFocusMeterExperience.system == null)
+        {
+            return;
+        }
 
-    }
+        if (NeuroGuideFocusMeterExperience.system.options == null)
+        {
+            return;
+        }
+
+        if (NeuroGuideFocusMeterExperience.system.isPlayingBackwards == false)
+        {
+            if (NeuroGuideFocusMeterExperience.system.currentScore > NeuroGuideFocusMeterExperience.system.options.threshold)
+            {
+                // Increment before we hit our switch case
+                if (NeuroGuideFocusMeterExperience.system.currentLevel == 0)
+                {
+                    NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[0].onSuccessStageToJumpTo;
+                }
+                else if (NeuroGuideFocusMeterExperience.system.currentLevel == 1)
+                {
+                    NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[1].onSuccessStageToJumpTo;
+                }
+                else if (NeuroGuideFocusMeterExperience.system.currentLevel == 2)
+                {
+                    NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[2].onSuccessStageToJumpTo;
+                }
+                else if (NeuroGuideFocusMeterExperience.system.currentLevel == 3)
+                {
+                    NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[3].onSuccessStageToJumpTo;
+                }
+                else if (NeuroGuideFocusMeterExperience.system.currentLevel == 4)
+                {
+                    NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[4].onSuccessStageToJumpTo;
+                }
+                else if (NeuroGuideFocusMeterExperience.system.currentLevel == 4)
+                {
+                    NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[5].onSuccessStageToJumpTo;
+                }
+
+                switch (NeuroGuideFocusMeterExperience.system.currentLevel)
+                {
+                    case 0:
+
+                        nestreLogo.logo.gameObject.SetActive(false);
+                        hyperCube.hypercube.SetActive(false);
+
+                        NeuroGuideFocusMeterExperience.system.options.threshold = NeuroGuideFocusMeterExperience.system.options.stages[0].threshold;
+
+                        if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
+                        {
+                            Debug.Log("ChangeAnimationWhenScoreFallsBelowThreshold.cs // OnAboveFocusThreshold Level 0");
+                        }
+
+                        break;
+
+                    case 1:
+
+                        nestreLogo.logo.gameObject.SetActive(false);
+                        hyperCube.hypercube.SetActive(false);
+
+                        NeuroGuideFocusMeterExperience.system.options.threshold = NeuroGuideFocusMeterExperience.system.options.stages[1].threshold;
+
+                        if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
+                        {
+                            Debug.Log("ChangeAnimationWhenScoreFallsBelowThreshold.cs // OnAboveFocusThreshold Level 1");
+                        }
+
+                        break;
+
+                    case 2:
+
+                        nestreLogo.logo.gameObject.SetActive(false);
+                        hyperCube.hypercube.SetActive(false);
+
+                        NeuroGuideFocusMeterExperience.system.options.threshold = NeuroGuideFocusMeterExperience.system.options.stages[2].threshold;
+
+                        if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
+                        {
+                            Debug.Log("ChangeAnimationWhenScoreFallsBelowThreshold.cs // OnAboveFocusThreshold Level 2");
+                        }
+
+                        break;
+
+                    case 3:
+
+                        nestreLogo.logo.gameObject.SetActive(false);
+                        hyperCube.hypercube.SetActive(false);
+
+                        NeuroGuideFocusMeterExperience.system.options.threshold = NeuroGuideFocusMeterExperience.system.options.stages[3].threshold;
+
+                        if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
+                        {
+                            Debug.Log("ChangeAnimationWhenScoreFallsBelowThreshold.cs // OnAboveFocusThreshold Level 3");
+                        }
+
+                        break;
+
+                    case 4:
+
+                        nestreLogo.logo.gameObject.SetActive(false);
+                        hyperCube.hypercube.SetActive(false);
+                        hyperCubePieces.gameObject.SetActive(true);
+
+                        NeuroGuideFocusMeterExperience.system.options.threshold = NeuroGuideFocusMeterExperience.system.options.stages[4].threshold;
+
+                        if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
+                        {
+                            Debug.Log("ChangeAnimationWhenScoreFallsBelowThreshold.cs // OnAboveFocusThreshold Level 4");
+                        }
+
+                        break;
+
+                    case 5:
+
+                        hyperCubePieces.gameObject.SetActive(false);
+                        nestreLogo.logo.gameObject.SetActive(true);
+                        hyperCube.hypercube.SetActive(true);
+
+                        NeuroGuideFocusMeterExperience.system.options.threshold = NeuroGuideFocusMeterExperience.system.options.stages[5].threshold;
+
+                        if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
+                        {
+                            Debug.Log("ChangeAnimationWhenScoreFallsBelowThreshold.cs // OnAboveFocusThreshold Level 5");
+                        }
+
+                        break;
+                }
+            }
+        }
+
+    } // END OnAboveFocusThreshold
 
     #endregion
 
@@ -79,35 +210,145 @@ public class ChangeAnimationWhenScoreFallsBelowThreshold: MonoBehaviour, INeuroG
     /// We set the score to an arbitrary value, resetting the animation to a far earlier state
     /// </summary>
     //--------------------------------------//
-    public void OnBelowThreshold()
+    public void OnBelowFocusThreshold()
     //--------------------------------------//
     {
-        if(NeuroGuideAnimationExperience.system != null)
-        {
-            float currentProgressInSeconds = MathHelper.Map( changeToProgress, 0f, 1f, 0f, NeuroGuideAnimationExperience.system.options.totalDurationInSeconds );
-            NeuroGuideAnimationExperience.system.currentProgressInSeconds = currentProgressInSeconds;
-        }
 
+        if (NeuroGuideFocusMeterExperience.system.currentScore < NeuroGuideFocusMeterExperience.system.options.threshold)
+        {
+            // Meaning we just went above the threshold
+
+            if (NeuroGuideFocusMeterExperience.system.currentLevel < 0)
+            {
+                NeuroGuideFocusMeterExperience.system.currentLevel = 0;
+            }
+
+            if (NeuroGuideFocusMeterExperience.system == null)
+            {
+                Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // System is null");
+
+                return;
+            }
+            if (NeuroGuideFocusMeterExperience.system.options == null)
+            {
+                Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // Options is null");
+
+                return;
+            }
+
+            if (NeuroGuideFocusMeterExperience.system.isPlayingBackwards == false)
+            {
+                switch (NeuroGuideFocusMeterExperience.system.currentLevel)
+                {
+                    case 0:
+
+                        NeuroGuideFocusMeterExperience.system.options.threshold = NeuroGuideFocusMeterExperience.system.options.stages[0].threshold;
+                        NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[0].onFailureStageToJumpTo;
+
+                        if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
+                        {
+                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level " + NeuroGuideFocusMeterExperience.system.options.stages[0].onFailureStageToJumpTo);
+                        }
+
+                        break;
+
+                    case 1:
+
+                        NeuroGuideFocusMeterExperience.system.options.threshold = NeuroGuideFocusMeterExperience.system.options.stages[1].threshold;
+                        NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[1].onFailureStageToJumpTo;
+
+                        if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
+                        {
+                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level 1 going back to Level " + NeuroGuideFocusMeterExperience.system.options.stages[1].onFailureStageToJumpTo);
+                        }
+
+                        break;
+
+                    case 2:
+
+                        NeuroGuideFocusMeterExperience.system.options.threshold = NeuroGuideFocusMeterExperience.system.options.stages[2].threshold;
+                        NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[2].onFailureStageToJumpTo;
+
+                        if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
+                        {
+                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level 2 going back to Level " + NeuroGuideFocusMeterExperience.system.options.stages[2].onFailureStageToJumpTo);
+                        }
+
+                        break;
+
+                    case 3:
+
+                        NeuroGuideFocusMeterExperience.system.options.threshold = NeuroGuideFocusMeterExperience.system.options.stages[3].threshold;
+                        NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[3].onFailureStageToJumpTo;
+
+                        if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
+                        {
+                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level 3 going back to Level " + NeuroGuideFocusMeterExperience.system.options.stages[3].onFailureStageToJumpTo);
+                        }
+
+                        break;
+
+                    case 4:
+
+                        NeuroGuideFocusMeterExperience.system.options.threshold = NeuroGuideFocusMeterExperience.system.options.stages[4].threshold;
+                        NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[4].onFailureStageToJumpTo;
+
+                        if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
+                        {
+                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level 4 going back to level " + NeuroGuideFocusMeterExperience.system.options.stages[4].onFailureStageToJumpTo);
+                        }
+
+                        break;
+
+                    case 5:
+
+                        nestreLogo.logo.gameObject.SetActive(false);
+                        hyperCube.hypercube.SetActive(false);
+
+                        NeuroGuideFocusMeterExperience.system.isPlayingBackwards = true;
+                        NeuroGuideFocusMeterExperience.system.options.threshold = NeuroGuideFocusMeterExperience.system.options.stages[1].threshold;
+                        NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[5].onFailureStageToJumpTo;
+                        NeuroGuideFocusMeterExperience.system.currentProgressInSeconds = NeuroGuideFocusMeterExperience.system.options.totalDurationInSeconds;
+
+                        hyperCubePieces.gameObject.SetActive(true);
+
+                        if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
+                        {
+                            Debug.Log("NeuroGuideFocusExperience.cs // CheckIfScoreIsBelowThreshold() // We are at Level 5 going back to level " + NeuroGuideFocusMeterExperience.system.options.stages[5].onFailureStageToJumpTo);
+                            Debug.Log("Current Level = " + NeuroGuideFocusMeterExperience.system.currentLevel);
+
+
+                        }
+
+                        break;
+                }
+            }
+        }
     } //END OnBelowThreshold Method
 
     #endregion
 
     #region PUBLIC - NEUROGUIDE - ON DATA UPDATE
 
-    public void OnDataUpdate( float normalizedValue )
+    //-----------------------------------------------------------//
+    public void OnFocusDataUpdate(float normalizedValue)
+    //-----------------------------------------------------------
     {
         //Debug.Log( normalizedValue );
         //Debug.Log( NeuroGuideAnimationExperience.system.currentProgressInSeconds );
-    }
+
+    } // END OnFocusDataUpdate
 
     #endregion
 
     #region PUBLIC - NEUROGUIDE - ON RECIEVING REWARD CHANGED
 
-    public void OnRecievingRewardChanged( bool isRecievingReward )
+    //---------------------------------------------------------------------//
+    public void OnRecievingFocusRewardChanged(bool isRecievingReward)
+    //---------------------------------------------------------------------//
     {
 
-    }
+    } // END OnRecievingFocusRewardChanged
 
     #endregion
 
