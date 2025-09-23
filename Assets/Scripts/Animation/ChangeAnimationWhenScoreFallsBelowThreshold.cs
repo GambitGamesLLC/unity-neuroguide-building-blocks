@@ -314,9 +314,9 @@ public class ChangeAnimationWhenScoreFallsBelowThreshold : MonoBehaviour, INeuro
                         hyperCube.hypercube.SetActive(false);
                     }
                     
-                    NeuroGuideFocusMeterExperience.system.options.threshold = NeuroGuideFocusMeterExperience.system.options.stages[2].threshold;
+                    NeuroGuideFocusMeterExperience.system.options.threshold = NeuroGuideFocusMeterExperience.system.options.stages[3].threshold;
                     NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[5].onFailureStageToJumpTo;
-                    NeuroGuideFocusMeterExperience.system.currentProgressInSeconds = (NeuroGuideFocusMeterExperience.system.options.totalDurationInSeconds / 5) * 2;
+                    NeuroGuideFocusMeterExperience.system.currentProgressInSeconds = (NeuroGuideFocusMeterExperience.system.options.totalDurationInSeconds / 5) * 2.5f;
                     NeuroGuideFocusMeterExperience.system.currentScore = NeuroGuideFocusMeterExperience.system.currentProgressInSeconds / NeuroGuideFocusMeterExperience.system.options.totalDurationInSeconds;
 
                     StartCoroutine("IWait");
