@@ -33,6 +33,10 @@ public class ChangeAnimationWhenScoreFallsBelowThreshold : MonoBehaviour, INeuro
     //------------------------------//
     {
         CheckIfWeShouldPlayAnimationBackwards();
+        if(NeuroGuideFocusMeterExperience.system.currentLevel == 5)
+        {
+            NeuroGuideFocusMeterExperience.system.preventThresholdLength = 2.5f;
+        }
 
     } // END Update
 
@@ -304,9 +308,12 @@ public class ChangeAnimationWhenScoreFallsBelowThreshold : MonoBehaviour, INeuro
 
                 case 5:
 
-                    nestreLogo.logo.gameObject.SetActive(false);
-                    hyperCube.hypercube.SetActive(false);
-
+                    if(nestreLogo.logo.gameObject.activeSelf == true)
+                    {
+                        nestreLogo.logo.gameObject.SetActive(false);
+                        hyperCube.hypercube.SetActive(false);
+                    }
+                    
                     NeuroGuideFocusMeterExperience.system.options.threshold = NeuroGuideFocusMeterExperience.system.options.stages[2].threshold;
                     NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[5].onFailureStageToJumpTo;
                     NeuroGuideFocusMeterExperience.system.currentProgressInSeconds = (NeuroGuideFocusMeterExperience.system.options.totalDurationInSeconds / 5) * 2;
@@ -314,7 +321,10 @@ public class ChangeAnimationWhenScoreFallsBelowThreshold : MonoBehaviour, INeuro
 
                     StartCoroutine("IWait");
 
-                    hyperCubePieces.gameObject.SetActive(true);
+                    if(hyperCubePieces.gameObject.activeSelf == false)
+                    {
+                        hyperCubePieces.gameObject.SetActive(true);
+                    }
 
                     if (NeuroGuideFocusMeterExperience.system.options.showDebugLogs == true)
                     {
@@ -336,7 +346,7 @@ public class ChangeAnimationWhenScoreFallsBelowThreshold : MonoBehaviour, INeuro
         NeuroGuideManager.Instance.enabled = false;
         yield return new WaitForSeconds(.33f);
         NeuroGuideManager.Instance.enabled = true;
-        NeuroGuideFocusMeterExperience.system.preventThresholdLength = 0;
+        //NeuroGuideFocusMeterExperience.system.preventThresholdLength = 0;
 
     } // END IWait
 

@@ -641,7 +641,7 @@ MonoBehaviour:
     onSuccessStageToJumpTo: 5
   - gainingFocusMultiplier: 1
     losingFocusMultiplier: 1
-    threshold: 1.1
+    threshold: 0.99
     onFailureStageToJumpTo: 2
     onSuccessStageToJumpTo: 0
 --- !u!1001 &227790112
