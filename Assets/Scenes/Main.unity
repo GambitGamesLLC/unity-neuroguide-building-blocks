@@ -789,6 +789,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5219161933298801592, guid: 49a40f74f7fb88848bafbf7740153564, type: 3}
+      propertyPath: stages.Array.data[5].onFailureStageToJumpTo
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5852213532212102584, guid: 49a40f74f7fb88848bafbf7740153564, type: 3}
       propertyPath: m_Name
       value: NeuroGuide_Main
