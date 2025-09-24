@@ -32,44 +32,13 @@ public class ChangeAnimationWhenScoreFallsBelowThreshold : MonoBehaviour, INeuro
     private void Update()
     //------------------------------//
     {
-        CheckIfWeShouldPlayAnimationBackwards();
+
         if(NeuroGuideFocusMeterExperience.system.currentLevel == 5)
         {
             NeuroGuideFocusMeterExperience.system.preventThresholdLength = 2.5f;
         }
 
     } // END Update
-
-    #endregion
-
-    #region PRIVATE - CHECK IF WE SHOULD PLAY ANIMATION BACKWARDS
-
-    //------------------------------------------------------//
-    private void CheckIfWeShouldPlayAnimationBackwards()
-    //------------------------------------------------------//
-    {
-        /*
-        if (NeuroGuideFocusMeterExperience.system.isPlayingBackwards == true)
-        {
-            AnimatorStateInfo _info = animator.GetCurrentAnimatorStateInfo(0);
-
-            // Level 2
-            if (_info.normalizedTime >= .41f || _info.normalizedTime <= .4f && NeuroGuideFocusMeterExperience.system.currentLevel == 2)
-            {
-                NeuroGuideFocusMeterExperience.system.isPlayingBackwards = true;
-
-                //Debug.Log("ChangeAnimationWhenScoreFallsBelowThreshold // CheckIfWeShouldPlayAnimationBackwards() // Playing backwards we are at level 2");
-            }
-            else
-            {
-                NeuroGuideFocusMeterExperience.system.isPlayingBackwards = false;
-                NeuroGuideFocusMeterExperience.system.preventThresholdLength = 0;
-
-                //Debug.Log("ChangeAnimationWhenScoreFallsBelowThreshold // CheckIfWeShouldPlayAnimationBackwards() // Stopped playing backwards");
-            }
-        }
-        */
-    } // END CheckIfWeShouldPlayAnimationBackwards
 
     #endregion
 
@@ -94,23 +63,23 @@ public class ChangeAnimationWhenScoreFallsBelowThreshold : MonoBehaviour, INeuro
             // Increment before we hit our switch case
             if (NeuroGuideFocusMeterExperience.system.currentLevel == 0)
             {
-                NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[0].onSuccessStageToJumpTo;
+                NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[0].onSuccessStageToJumpTo;
             }
             else if (NeuroGuideFocusMeterExperience.system.currentLevel == 1)
             {
-                NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[1].onSuccessStageToJumpTo;
+                NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[1].onSuccessStageToJumpTo;
             }
             else if (NeuroGuideFocusMeterExperience.system.currentLevel == 2)
             {
-                NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[2].onSuccessStageToJumpTo;
+                NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[2].onSuccessStageToJumpTo;
             }
             else if (NeuroGuideFocusMeterExperience.system.currentLevel == 3)
             {
-                NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[3].onSuccessStageToJumpTo;
+                NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[3].onSuccessStageToJumpTo;
             }
             else if (NeuroGuideFocusMeterExperience.system.currentLevel == 4)
             {
-                NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[4].onSuccessStageToJumpTo;
+                NeuroGuideFocusMeterExperience.system.currentLevel = NeuroGuideFocusMeterExperience.system.options.stages[4].onSuccessStageToJumpTo;
             }
             else if (NeuroGuideFocusMeterExperience.system.currentLevel == 4)
             {

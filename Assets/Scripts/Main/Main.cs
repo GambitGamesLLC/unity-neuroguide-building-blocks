@@ -1,98 +1,76 @@
-#region IMPORTS
 
-using System.Collections.Generic;
-using UnityEngine;
-using System;
-using System.Linq;
+namespace gambit.neuroguide
+{
 
-#if EXT_DOTWEEN
-using DG.Tweening;
+    #region IMPORTS
+
+#if UNITY_INPUT
+    using UnityEngine.InputSystem;
 #endif
 
 #if GAMBIT_NEUROGUIDE
-using gambit.neuroguide;
+    using gambit.neuroguide;
 #endif
 
-#if GAMBIT_CONFIG
-using gambit.config;
+
+#if EXT_DOTWEEN
+    using DG.Tweening;
 #endif
 
-#if GAMBIT_PROCESS
-using gambit.process;
-#endif
-
-#if UNITY_INPUT
-using UnityEngine.InputSystem;
-#endif
-
-#if EXT_TOTALJSON
-using Leguar.TotalJSON;
-#endif
-
-#if EXT_INGAMEDEBUGCONSOLE
-using IngameDebugConsole;
-#endif
-
-#endregion
-
-/// <summary>
-/// Primary entry point of the project
-/// </summary>
-public class Main : MonoBehaviour
-{
-
-    #region PUBLIC - VARIABLES
-
-    /// <summary>
-    /// Should we enable the debug logs?
-    /// </summary>
-    public bool logs = true;
-
-    /// <summary>
-    /// Should we enable the debug system for the NeuroGear hardware? This will enable keyboard events to control simulated NeuroGear hardware data spawned during the Create() method of NeuroGuideManager.cs
-    /// </summary>
-    public bool debug = true;
-
-    /// <summary>
-    /// How long should this experience last if the user was in a reward state continuously?
-    /// </summary>
-    public float length = 1f;
-
-    /// <summary>
-    /// UDP port address to listen to for NeuroGuide communication
-    /// </summary>
-    public string address = "127.0.0.1";
-
-    /// <summary>
-    /// UDP port to listen to for NeuroGuide communication
-    /// </summary>
-    public int port = 50000;
-
-    /// <summary>
-    /// The threshold for when we want the cube animation to change states between 'pieces' and 'hypercube'
-    /// </summary>
-    public float threshold = 0.9f;
+    using UnityEngine;
+    using System.Collections.Generic;
 
     #endregion
 
-    #region PRIVATE - VARIABLES
-
     /// <summary>
-    /// The config manager system instantiated at Start()
+    /// Main entry point for the NeuroGuide experience
     /// </summary>
-    private ConfigManager.ConfigManagerSystem configSystem;
-
-    #endregion
-
-    #region PUBLIC - START
-
-    /// <summary>
-    /// Unity lifecycle method
-    /// </summary>
-    //----------------------------------//
-    public void Start()
-    //----------------------------------//
+    public class Main : MonoBehaviour
     {
+
+        #region PUBLIC - VARIABLES
+
+        /// <summary>
+        /// Should we enable the NeuroGuideManager debug logs?
+        /// </summary>
+        public bool logs = true;
+        
+        /// <summary>
+        /// Should we enable the debug system for the NeuroGear hardware? This will enable keyboard events to control simulated NeuroGear hardware data spawned during the Create() method of NeuroGuideManager.cs
+        /// </summary>
+        public bool debug = true;
+
+        /// <summary>
+        /// How long should this experience last if the user were to be in a reward state (doesn't have to be consecutively), but their score to get towards the goal lowers when they are not in the reward state
+        /// </summary>
+        public float totalDurationInSeconds = 5;
+
+        /// <summary>
+        /// What should the score be before we call our OnAboveThreshold and OnBelowThreshold callbacks?
+        /// </summary>
+        public float threshold = 0.9f;
+
+        /// <summary>
+        /// How long should we prevent the OnAboveThreshold callback? This happens after getting our score above the threshold, then falling below the threshold.
+        /// </summary>
+        public float preventThresholdPassedLength = 2f;
+
+        /// <summary>
+        /// Each stages with its own specific configurations for how it works
+        /// </summary>
+        public List<NeuroGuideFocusMeterExperience.Options.Stages> stages = new List<NeuroGuideFocusMeterExperience.Options.Stages>();
+
+        #endregion
+
+        #region PUBLIC - START
+
+        /// <summary>
+        /// Unity lifecycle method
+        /// </summary>
+        //---------------------------------//
+        public void Start()
+        //---------------------------------//
+        {
 #if !EXT_DOTWEEN
         Debug.LogError( "Main.cs Start() Missing 'EXT_DOTWEEN' scripting define symbol and/or package" );
 #endif
@@ -105,242 +83,109 @@ public class Main : MonoBehaviour
 #if !EXT_TOTALJSON
         Debug.LogError( "Main.cs Start() Missing 'EXT_TOTALJSON' scripting define symbol and/or package" );
 #endif
-#if !GAMBIT_PROCESS
-        Debug.LogError( "Main.cs Start() Missing 'GAMBIT_PROCESS' scripting define symbol and/or package" );
-#endif
 
-        LoadDataFromProcess();
+            CreateNeuroGuideManager();
 
-    } //END Start Method
+        } //END Start Method
 
-    #endregion
+        #endregion
 
-    #region PRIVATE - LOAD DATA FROM PROCESS IF AVAILABLE
+        #region PRIVATE - CREATE NEUROGUIDE MANAGER
 
-    /// <summary>
-    /// Loads data that was passed into the process
-    /// </summary>
-    //-------------------------------------//
-    private void LoadDataFromProcess()
-    //-------------------------------------//
-    {
-
-#if GAMBIT_PROCESS
-
-
-        List<string> keys = ProcessManager.ReadArgumentKeys();
-        List<string> values = ProcessManager.ReadArgumentValues();
-
-        Debug.Log( "Main.cs LoadDataFromProcess() keys.count = " + keys.Count + ", values.count = " + values.Count );
-
-        //If we have no command line key/values to read, skip this step
-        if(keys == null || (keys != null && keys.Count == 0) ||
-           values == null || (values != null && values.Count == 0) )
+        /// <summary>
+        /// Creates the NeuroGuideManager
+        /// </summary>
+        //---------------------------------------------//
+        private void CreateNeuroGuideManager()
+        //---------------------------------------------//
         {
-            Debug.LogWarning( "Main.cs LoadDataFromProcess() either keys or values are null, usind defaults set in editor instead of data from process" );
-            CreateVisualLog();
-            return;
-        }
+            
+            NeuroGuideManager.Create
+            (
+                //Create and pass in Options object
+                new NeuroGuideManager.Options()
+                {
+                    showDebugLogs = logs,
+                    enableDebugData = debug
+                },
 
-        //If our key/value pairs are not in sync, something went wrong, skip this step
-        if( keys.Count != values.Count )
+                //OnSuccess
+                (NeuroGuideManager.NeuroGuideSystem system) => {
+                    //if( logs ) Debug.Log( "NeuroGuideDemo.cs CreateNeuroGuideManager() Successfully created NeuroGuideManager and recieved system object" );
+
+                    CreateNeuroGuideFocusMeterExperience();
+                },
+
+                //OnFailed
+                (string error) => {
+                    if (logs) Debug.LogWarning(error);
+                },
+
+                //OnDataUpdate
+                (NeuroGuideData) =>
+                {
+                    //if( logs ) Debug.Log( "NeuroGuideDemo CreateNeuroGuideManager() Hardware Data updated ... data.isRecievingReward = " + data.isRecievingReward );
+                },
+
+                //OnStateUpdate
+                (NeuroGuideManager.State state) =>
+                {
+                    //if( logs ) Debug.Log( "NeuroGuideDemo.cs CreateNeuroGuideManager() State changed to " + state.ToString() );
+                });
+
+        } //END CreateNeuroGuideManager Method
+
+        //----------------------------------------------//
+        private void CreateNeuroGuideFocusMeterExperience()
+        //----------------------------------------------//
         {
-            //In Unity Editor, we expect our count to be above zero but it can not match, no need to log a warning
-#if !UNITY_EDITOR
-            Debug.LogWarning( "Main.cs LoadDataFromProcess() keys & values don't have a matching Count, usind defaults set in editor instead of data from process" );
-#endif
-            CreateVisualLog();
-            return;
-        }
+            NeuroGuideFocusMeterExperience.Create
+            (
+                //Create and Pass in Options object
+                new NeuroGuideFocusMeterExperience.Options()
+                {
+                    showDebugLogs = logs,
+                    totalDurationInSeconds = totalDurationInSeconds,
+                    threshold = threshold,
+                    preventThresholdPassedLength = preventThresholdPassedLength,
+                    
+                    stages = stages,
 
-        for(int i = 0; i < keys.Count; ++i)
-        {
+                    OnAboveFocusThreshold = () =>
+                    {
+                        //Debug.Log( "Above Threshold" );
+                    },
+                    OnBelowFocusThreshold = () =>
+                    {
+                        //Debug.Log( "Below Threshold" );
+                    },
+                    OnFocusDataUpdate = (float score) =>
+                    {
+                        //Debug.Log( score );
+                    },
+                    OnRecievingFocusRewardChanged = (bool reward) =>
+                    {
+                        //Debug.Log( reward );
+                    }
+                },
 
-            string key = keys[ i ];
-            string value = values[ i ];
+                //OnSuccess
+                (NeuroGuideFocusMeterExperience.NeuroGuideFocusMeterExperienceSystem system) =>
+                {
+                    //if( logs ) Debug.Log( "CreateNeuroGuideAnimationExperience() OnSuccess" );
+                },
 
-            Debug.Log( key + " : " + value );
+                //OnError
+                (string error) =>
+                {
+                    if (logs) Debug.Log(error);
+                }
+            );
 
-            if(key == "logs")
-            {
-                logs = bool.Parse( value );
-            }
-            else if(key == "debug")
-            {
-                debug = bool.Parse( value );
-            }
-            else if(key == "length")
-            {
-                length = float.Parse( value );
-            }
-            else if(key == "address")
-            {
-                address = value;
-            }
-            else if(key == "port")
-            {
-                port = int.Parse( value );
-            }
-            else if(key == "threshold")
-            {
-                threshold = float.Parse( value );
-            }
+        } //END CreateNeuroGuideAnimationExperience Method
 
-        }
+        #endregion
 
-        CreateVisualLog();
+    } //END Main Class
 
-#endif
-
-    } //END LoadDataFromProcess Method
-
-    #endregion
-
-    #region PRIVATE - CREATE VISUAL LOGGER
-
-    /// <summary>
-    /// Creates a visual debug log debug logs have been enabled and we are not in the Unity Editor
-    /// </summary>
-    //----------------------------------//
-    private void CreateVisualLog()
-    //----------------------------------//
-    {
-
-#if EXT_INGAMEDEBUGCONSOLE
-#if UNITY_EDITOR
-        DebugLogManager.Instance.gameObject.SetActive( false );
-#else
-        DebugLogManager.Instance.gameObject.SetActive( logs );
-#endif
-#endif
-        CreateNeuroGuideManager();
-
-    } //END CreateVisualLog Method
-
-#endregion
-
-    #region PRIVATE - CREATE NEUROGUIDE MANAGER
-
-    /// <summary>
-    /// Creates the NeuroGuideManager
-    /// </summary>
-    //---------------------------------------------//
-    private void CreateNeuroGuideManager()
-    //---------------------------------------------//
-    {
-
-#if GAMBIT_NEUROGUIDE
-
-        NeuroGuideManager.Create
-        (
-            //Options
-            new NeuroGuideManager.Options()
-            {
-                showDebugLogs = logs,
-                enableDebugData = debug,
-                udpAddress = address,
-                udpPort = port
-            },
-
-            //OnSuccess
-            ( NeuroGuideManager.NeuroGuideSystem system ) => 
-            {
-                if( logs ) Debug.Log( "Main.cs CreateNeuroGuideManager() Successfully created NeuroGuideManager" );
-                CreateNeuroGuideAnimationExperience();
-            },
-
-            //OnError
-            LogError,
-
-            //OnDataUpdate
-            ( NeuroGuideData? data ) =>
-            {
-                //if( logs ) Debug.Log( "NeuroGuideDemo CreateNeuroGuideManager() Data Updated" );
-            },
-
-            //OnStateUpdate
-            ( NeuroGuideManager.State state ) =>
-            {
-                if( logs ) Debug.Log( "Main.cs CreateNeuroGuideManager() State changed to " + state.ToString() );
-            } );
-
-#endif
-
-    } //END CreateNeuroGuideManager Method
-
-    #endregion
-
-    #region PRIVATE - CREATE NEUROGUIDE ANIMATION EXPERIENCE
-
-    /// <summary>
-    /// Initializes a NeuroGuideAnimationExperience once the hardware is ready
-    /// </summary>
-    //---------------------------------------------//
-    private void CreateNeuroGuideAnimationExperience()
-    //---------------------------------------------//
-    {
-
-#if GAMBIT_NEUROGUIDE
-
-        NeuroGuideAnimationExperience.Create
-        (
-            //Options
-            new NeuroGuideAnimationExperience.Options()
-            {
-                showDebugLogs = logs,
-                totalDurationInSeconds = length,
-                threshold = threshold
-            },
-
-            //OnSuccess
-            ( NeuroGuideAnimationExperience.NeuroGuideAnimationExperienceSystem system)=>
-            {
-                if( logs ) Debug.Log( "Main.cs CreateNeuroGuideAnimationExperience() Successfully created NeuroGuideExperience" );
-            },
-
-            //OnFailed
-            LogError
-
-        );
-
-#endif
-
-    } //END CreateNeuroGuideExperience Method
-
-    #endregion
-
-    #region PRIVATE - LOG WARNING
-
-    /// <summary>
-    /// Logs warning if the writing to the console log has been enabled
-    /// </summary>
-    /// <param name="warning"></param>
-    //------------------------------------------//
-    private void LogWarning( string warning )
-    //------------------------------------------//
-    {
-        if(logs)
-            Debug.LogWarning( warning );
-
-    } //END LogWarning Method
-
-    #endregion
-
-    #region PRIVATE - LOG ERROR
-
-    /// <summary>
-    /// Logs errors if the writing to the console log has been enabled
-    /// </summary>
-    /// <param name="error"></param>
-    //------------------------------------------//
-    private void LogError( string error )
-    //------------------------------------------//
-    {
-        if(logs)
-            Debug.LogError( error );
-
-    } //END LogError Method
-
-    #endregion
-
-} //END Main Class
+} //END gambit.neuroguide Namespace
