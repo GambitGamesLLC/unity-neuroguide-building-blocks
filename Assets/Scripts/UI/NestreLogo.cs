@@ -4,7 +4,7 @@ using UnityEngine;
 using gambit.neuroguide;
 #endif
 
-public class NestreLogo : MonoBehaviour, INeuroGuideAnimationExperienceInteractable
+public class NestreLogo : MonoBehaviour, INeuroGuideFocusMeterExperienceInteractable
 {
     #region PUBLIC - VARIABLES
 
@@ -34,7 +34,7 @@ public class NestreLogo : MonoBehaviour, INeuroGuideAnimationExperienceInteracta
     /// </summary>
     /// <param name="isRecievingReward">Is the user currently recieiving a reward?</param>
     //--------------------------------------------------------------------//
-    public void OnRecievingRewardChanged( bool isRecievingReward )
+    public void OnRecievingFocusRewardChanged( bool isRecievingReward )
     //--------------------------------------------------------------------//
     {
 
@@ -49,7 +49,7 @@ public class NestreLogo : MonoBehaviour, INeuroGuideAnimationExperienceInteracta
     /// </summary>
     /// <param name="system">The NeuroGuide system object</param>
     //------------------------------------------------------------------------//
-    public void OnDataUpdate( float value )
+    public void OnFocusDataUpdate( float value )
     //------------------------------------------------------------------------//
     {
 
@@ -63,11 +63,20 @@ public class NestreLogo : MonoBehaviour, INeuroGuideAnimationExperienceInteracta
     /// Called when the NeuroGuideAnimationExperience has a score thats above the threshold value
     /// </summary>
     //------------------------------------//
-    public void OnAboveThreshold()
+    public void OnAboveFocusThreshold()
     //------------------------------------//
     {
-        logo.SetActive( true );
+        /*
+        switch (NeuroGuideFocusMeterExperience.system.currentLevel)
+        {
+            case 5:
+                logo.SetActive(true);
 
+                Debug.Log("NestreLogo.cs // Showing Nestre Logo");
+
+                break;
+        }
+        */
     } //END OnAboveThreshold
 
     #endregion
@@ -78,10 +87,10 @@ public class NestreLogo : MonoBehaviour, INeuroGuideAnimationExperienceInteracta
     /// Called when the NeuroGuideAnimationExperience has a score thats below the threshold value
     /// </summary>
     //-------------------------------------//
-    public void OnBelowThreshold()
+    public void OnBelowFocusThreshold()
     //-------------------------------------//
     {
-        logo.SetActive( false );
+        //logo.SetActive( false );
 
     } //END OnBelowThreshold
 

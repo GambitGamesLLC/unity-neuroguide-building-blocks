@@ -192,8 +192,31 @@ MonoBehaviour:
       - rid: 6121695212384026846
       - rid: 6121695212384026847
       - rid: 6121695212384026848
+      - rid: 3823932340677902336
     m_RuntimeSettings:
-      m_List: []
+      m_List:
+      - rid: 6121695212384026814
+      - rid: 6121695212384026816
+      - rid: 6121695212384026818
+      - rid: 6121695212384026819
+      - rid: 6121695212384026821
+      - rid: 6121695212384026822
+      - rid: 6121695212384026825
+      - rid: 6121695212384026826
+      - rid: 6121695212384026827
+      - rid: 6121695212384026829
+      - rid: 6121695212384026830
+      - rid: 6121695212384026833
+      - rid: 6121695212384026834
+      - rid: 6121695212384026835
+      - rid: 6121695212384026838
+      - rid: 6121695212384026839
+      - rid: 6121695212384026842
+      - rid: 6121695212384026844
+      - rid: 6121695212384026845
+      - rid: 6121695212384026846
+      - rid: 6121695212384026847
+      - rid: 6121695212384026848
   renderingLayerNames:
   - Default
   lightLayerName0: 
@@ -223,6 +246,10 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 3823932340677902336
+      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Core.Runtime}
+      data:
+        m_version: 0
     - rid: 6121695212384026814
       type: {class: SpecularFadeSettings, ns: UnityEngine.Rendering.HighDefinition, asm: Unity.RenderPipelines.HighDefinition.Runtime}
       data:

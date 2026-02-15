@@ -15,7 +15,7 @@ using UnityEngine;
 /// <summary>
 /// Controls the hyper cube parent gameobject. Causes it to rotate
 /// </summary>
-public class HyperCubesParent : MonoBehaviour, INeuroGuideAnimationExperienceInteractable
+public class HyperCubesParent : MonoBehaviour, INeuroGuideFocusMeterExperienceInteractable
 {
 
     #region PUBLIC - VARIABLES
@@ -67,7 +67,7 @@ public class HyperCubesParent : MonoBehaviour, INeuroGuideAnimationExperienceInt
     /// </summary>
     /// <param name="isRecievingReward">Is the user currently recieiving a reward?</param>
     //--------------------------------------------------------------------//
-    public void OnRecievingRewardChanged( bool isRecievingReward )
+    public void OnRecievingFocusRewardChanged( bool isRecievingReward )
     //--------------------------------------------------------------------//
     {
 
@@ -82,7 +82,7 @@ public class HyperCubesParent : MonoBehaviour, INeuroGuideAnimationExperienceInt
     /// </summary>
     /// <param name="system"></param>
     //-----------------------------------------------------------------------//
-    public void OnDataUpdate( float value )
+    public void OnFocusDataUpdate( float value )
     //-----------------------------------------------------------------------//
     {
 
@@ -117,7 +117,7 @@ public class HyperCubesParent : MonoBehaviour, INeuroGuideAnimationExperienceInt
     /// Called when the NeuroGuideAnimationExperience has a score thats above the threshold value
     /// </summary>
     //------------------------------------//
-    public void OnAboveThreshold()
+    public void OnAboveFocusThreshold()
     //------------------------------------//
     {
 
@@ -131,7 +131,7 @@ public class HyperCubesParent : MonoBehaviour, INeuroGuideAnimationExperienceInt
     /// Called when the NeuroGuideAnimationExperience has a score thats below the threshold value
     /// </summary>
     //-------------------------------------//
-    public void OnBelowThreshold()
+    public void OnBelowFocusThreshold()
     //-------------------------------------//
     {
 

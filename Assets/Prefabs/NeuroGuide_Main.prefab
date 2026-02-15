@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7402385807266453598}
-  - component: {fileID: 8950026127989062179}
+  - component: {fileID: 5219161933298801592}
   m_Layer: 0
   m_Name: NeuroGuide_Main
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8950026127989062179
+--- !u!114 &5219161933298801592
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,14 +41,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 5852213532212102584}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a77168c6d2f3ecc42a16d49ab7773315, type: 3}
+  m_Script: {fileID: 11500000, guid: 90ba08f1707cdf04ca3b2cfa4ad1c532, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  logs: 0
+  m_EditorClassIdentifier: Assembly-CSharp::gambit.neuroguide.NeuroGuideFocusMeterExperienceDemo
+  logs: 1
   debug: 1
-  entries: 1
-  min: -5
-  max: 5
-  ease: 1
-  duration: 2
-  randomizeStartValue: 0
+  totalDurationInSeconds: 2.5
+  threshold: 0.2
+  preventThresholdPassedLength: 2.2
+  stages:
+  - gainingFocusMultiplier: 1
+    losingFocusMultiplier: 1
+    threshold: 0.2
+    onFailureStageToJumpTo: 0
+    onSuccessStageToJumpTo: 1
+  - gainingFocusMultiplier: 1
+    losingFocusMultiplier: 1
+    threshold: 0.4
+    onFailureStageToJumpTo: 0
+    onSuccessStageToJumpTo: 2
+  - gainingFocusMultiplier: 1
+    losingFocusMultiplier: 1
+    threshold: 0.6
+    onFailureStageToJumpTo: 1
+    onSuccessStageToJumpTo: 3
+  - gainingFocusMultiplier: 1
+    losingFocusMultiplier: 1
+    threshold: 0.8
+    onFailureStageToJumpTo: 2
+    onSuccessStageToJumpTo: 4
+  - gainingFocusMultiplier: 1
+    losingFocusMultiplier: 1
+    threshold: 0.99
+    onFailureStageToJumpTo: 3
+    onSuccessStageToJumpTo: 5
+  - gainingFocusMultiplier: 1
+    losingFocusMultiplier: 1
+    threshold: 0.99
+    onFailureStageToJumpTo: 2
+    onSuccessStageToJumpTo: 0

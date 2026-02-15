@@ -3,6 +3,10 @@
 
 #if GAMBIT_NEUROGUIDE
 using gambit.neuroguide;
+using System.Collections;
+using UnityEngine.Rendering.VirtualTexturing;
+
+
 #endif
 
 #if GAMBIT_MATHHELPER
@@ -16,13 +20,11 @@ using UnityEngine;
 /// <summary>
 /// Rotate the hypercube a few times
 /// </summary>
-public class HypercubeSpin : MonoBehaviour, INeuroGuideAnimationExperienceInteractable
+public class HypercubeSpin : MonoBehaviour, INeuroGuideFocusMeterExperienceInteractable
 {
     #region PUBLIC - VARIABLES
 
     public Animator animator;
-
-    public float threshold = 0.99f;
 
     public string stateName;
 
@@ -34,17 +36,19 @@ public class HypercubeSpin : MonoBehaviour, INeuroGuideAnimationExperienceIntera
 
     #endregion
 
-    #region PUBLIC - START
+    #region PRIVATE - START
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    //---------------------//
+    private void Start()
+    //--------------------//
     {
         // Convert the state name to a hash for performance
         stateHash = Animator.StringToHash( stateName );
 
         PlayAnimationDirectly( stateName );
         animator.speed = 0f;
-    }
+
+    } // END Start
 
     #endregion
 
@@ -55,7 +59,7 @@ public class HypercubeSpin : MonoBehaviour, INeuroGuideAnimationExperienceIntera
     /// </summary>
     /// <param name="isRecievingReward">Is the user currently recieiving a reward?</param>
     //--------------------------------------------------------------------//
-    public void OnRecievingRewardChanged( bool isRecievingReward )
+    public void OnRecievingFocusRewardChanged( bool isRecievingReward )
     //--------------------------------------------------------------------//
     {
 
@@ -63,12 +67,16 @@ public class HypercubeSpin : MonoBehaviour, INeuroGuideAnimationExperienceIntera
 
     #endregion
 
-    #region PUBLIC - NUEROGUIDE - ON DATA UPDATE
+    #region PUBLIC - NUEROGUIDE - ON FOCUS DATA UPDATE
 
-    public void OnDataUpdate(float value)
+    //-------------------------------------------------//
+    public void OnFocusDataUpdate(float value)
+    //-------------------------------------------------//
     {
+
         PlayAnimationDirectly( stateName, 0, value);
-    }
+
+    } // END OnFocusDataUpdate
 
     #endregion
 
@@ -78,10 +86,10 @@ public class HypercubeSpin : MonoBehaviour, INeuroGuideAnimationExperienceIntera
     /// Called when the NeuroGuideAnimationExperience has a score thats above the threshold value
     /// </summary>
     //------------------------------------//
-    public void OnAboveThreshold()
+    public void OnAboveFocusThreshold()
     //------------------------------------//
     {
-
+        
     } //END OnAboveThreshold
 
     #endregion
@@ -92,15 +100,15 @@ public class HypercubeSpin : MonoBehaviour, INeuroGuideAnimationExperienceIntera
     /// Called when the NeuroGuideAnimationExperience has a score thats below the threshold value
     /// </summary>
     //-------------------------------------//
-    public void OnBelowThreshold()
+    public void OnBelowFocusThreshold()
     //-------------------------------------//
     {
-
+        
     } //END OnBelowThreshold
 
     #endregion
 
-    #region PBLIC - PLAY ANIMATION DIRECTLY
+    #region PUBLIC - PLAY ANIMATION DIRECTLY
 
     //-----------------------------------------------------------------//
     public void PlayAnimationDirectly(string stateName, int layer = 0, float normalizedTime = 0f)

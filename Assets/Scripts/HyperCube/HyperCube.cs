@@ -16,7 +16,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Keeps the Hypercube visual component up to date with the NeuroGuide hardware data
 /// </summary>
-public class HyperCube : MonoBehaviour, INeuroGuideAnimationExperienceInteractable
+public class HyperCube : MonoBehaviour, INeuroGuideFocusMeterExperienceInteractable
 {
 
     #region PUBLIC - VARIABLES
@@ -42,59 +42,9 @@ public class HyperCube : MonoBehaviour, INeuroGuideAnimationExperienceInteractab
     //---------------------------------//
     {
 
-        SetAnimationSpeedBasedOnAnimationLength();
-
         hypercube.SetActive( false );
 
     } //END Start
-
-    #endregion
-
-    #region PUBLIC - ON ENABLE
-
-    /// <summary>
-    /// Unity lifecycle methods
-    /// </summary>
-    //--------------------------------//
-    private void OnEnable()
-    //--------------------------------//
-    {
-        SetAnimationSpeedBasedOnAnimationLength();
-
-    } //END OnEnable Method
-
-    #endregion
-    
-    #region PRIVATE - SET ANIMATION SPEED BASED ON ANIMATION LENGTH
-
-    /// <summary>
-    /// Changes the animator speed, referencing the total length of the NeuroGuideAnimationExperience
-    /// </summary>
-    //-----------------------------------------------------------//
-    private void SetAnimationSpeedBasedOnAnimationLength()
-    //-----------------------------------------------------------//
-    {
-        if(NeuroGuideAnimationExperience.system == null)
-        {
-            return;
-        }
-
-        if(NeuroGuideAnimationExperience.system.options == null)
-        {
-            return;
-        }
-
-        //Based on the length of the experience, choose a animation speed for the hypercube to spin at
-
-        float length = NeuroGuideAnimationExperience.system.options.totalDurationInSeconds;
-
-        float animationSpeed = MathHelper.GetCorrelatedValueFromClosest( animationSearchList, animationReturnList, length );
-
-        animator.SetFloat( AnimationSpeedMultiplierVariableName, animationSpeed );
-
-        //Debug.Log( "length = " + length + ", animationSpeed = " + animator.GetFloat( "AnimationSpeed" ) );
-
-    } //END SetAnimationSpeedBasedOnAnimationLength Method
 
     #endregion
 
@@ -105,7 +55,7 @@ public class HyperCube : MonoBehaviour, INeuroGuideAnimationExperienceInteractab
     /// </summary>
     /// <param name="isRecievingReward">Is the user currently recieiving a reward?</param>
     //--------------------------------------------------------------------//
-    public void OnRecievingRewardChanged( bool isRecievingReward )
+    public void OnRecievingFocusRewardChanged( bool isRecievingReward )
     //--------------------------------------------------------------------//
     {
 
@@ -120,7 +70,7 @@ public class HyperCube : MonoBehaviour, INeuroGuideAnimationExperienceInteractab
     /// </summary>
     /// <param name="system">The NeuroGuide system object</param>
     //------------------------------------------------------------------------//
-    public void OnDataUpdate( float value )
+    public void OnFocusDataUpdate( float value )
     //------------------------------------------------------------------------//
     {
         
@@ -134,11 +84,20 @@ public class HyperCube : MonoBehaviour, INeuroGuideAnimationExperienceInteractab
     /// Called when the NeuroGuideAnimationExperience has a score thats above the threshold value
     /// </summary>
     //------------------------------------//
-    public void OnAboveThreshold()
+    public void OnAboveFocusThreshold()
     //------------------------------------//
     {
-        hypercube.SetActive( true );
+        /*
+        switch (NeuroGuideFocusMeterExperience.system.currentLevel)
+        {
+            case 5:
+                hypercube.SetActive(true);
 
+                Debug.Log("HyperCube.cs // Showing HyperCube");
+
+                break;
+        }
+        */
     } //END OnAboveThreshold
 
     #endregion
@@ -149,10 +108,10 @@ public class HyperCube : MonoBehaviour, INeuroGuideAnimationExperienceInteractab
     /// Called when the NeuroGuideAnimationExperience has a score thats below the threshold value
     /// </summary>
     //-------------------------------------//
-    public void OnBelowThreshold()
+    public void OnBelowFocusThreshold()
     //-------------------------------------//
     {
-        hypercube.SetActive( false );
+        //hypercube.SetActive( false );
 
     } //END OnBelowThreshold
 

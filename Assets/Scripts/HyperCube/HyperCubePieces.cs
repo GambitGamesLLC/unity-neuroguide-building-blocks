@@ -22,7 +22,7 @@ using UnityEngine;
 
 #endregion
 
-public class HyperCubePieces: MonoBehaviour, INeuroGuideAnimationExperienceInteractable
+public class HyperCubePieces: MonoBehaviour, INeuroGuideFocusMeterExperienceInteractable
 {
 
     #region PUBLIC - VARIABLES
@@ -71,7 +71,7 @@ public class HyperCubePieces: MonoBehaviour, INeuroGuideAnimationExperienceInter
     /// How far into the NeuroGuideExperience should we be before we cross the threshold? Uses a 0-1 normalized percentage value
     /// </summary>
     private float threshold = 0.85f;
-
+    
     #endregion
 
     #region PUBLIC START
@@ -111,7 +111,7 @@ public class HyperCubePieces: MonoBehaviour, INeuroGuideAnimationExperienceInter
     /// </summary>
     /// <param name="isRecievingReward">Is the user currently recieiving a reward?</param>
     //--------------------------------------------------------------------//
-    public void OnRecievingRewardChanged( bool isRecievingReward )
+    public void OnRecievingFocusRewardChanged( bool isRecievingReward )
     //--------------------------------------------------------------------//
     {
         
@@ -126,16 +126,15 @@ public class HyperCubePieces: MonoBehaviour, INeuroGuideAnimationExperienceInter
     /// </summary>
     /// <param name="system">The NeuroGuide system object</param>
     //------------------------------------------------------------------------//
-    public void OnDataUpdate( float value )
+    public void OnFocusDataUpdate( float value )
     //------------------------------------------------------------------------//
     {
-
         //Debug.Log( system.currentNormalizedAverageValue );
-        PlayAnimationDirectly( "Joining", 0, value );
+        PlayAnimationDirectly("Joining", 0, value);
 
         //Animate our cube grunge texture
 #if GAMBIT_MATHHELPER
-        if(grunge_material != null ) 
+        if (grunge_material != null ) 
             grunge_material.SetFloat( "_AlphaClipping", MathHelper.Map( value, 0f, threshold, grungeMin, grungeMax ) );
 #endif
 
@@ -155,11 +154,10 @@ public class HyperCubePieces: MonoBehaviour, INeuroGuideAnimationExperienceInter
     /// Called when the NeuroGuideAnimationExperience has a score thats above the threshold value
     /// </summary>
     //------------------------------------//
-    public void OnAboveThreshold()
+    public void OnAboveFocusThreshold()
     //------------------------------------//
     {
-        cube_pieces.SetActive( false );
-
+        
     } //END OnAboveThreshold
 
     #endregion
@@ -170,10 +168,9 @@ public class HyperCubePieces: MonoBehaviour, INeuroGuideAnimationExperienceInter
     /// Called when the NeuroGuideAnimationExperience has a score thats below the threshold value
     /// </summary>
     //-------------------------------------//
-    public void OnBelowThreshold()
+    public void OnBelowFocusThreshold()
     //-------------------------------------//
     {
-        cube_pieces.SetActive( true );
 
     } //END OnBelowThreshold
 
